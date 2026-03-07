@@ -6,6 +6,12 @@
     <title>Data & Facts | SHINX</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <!-- PapaParse: parses CSV files in the browser -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <!-- Embedded data fallback: charts work when deployed even if CSV is not available -->
+    <script src="data-embedded.js"></script>
 </head>
 <body>
     <!-- Announcement Bar -->
@@ -85,6 +91,52 @@
         </div>
     </section>
 
+    <!-- ===================== VISUALIZATIONS ===================== -->
+
+    <!-- Carbon Emissions by Brand + Emissions Over Time (side by side) -->
+    <section class="content-section viz-section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: var(--spacing-xs);">Carbon Emissions by Brand & Over Time</h2>
+            <p class="section-subtitle">Average annual CO₂ emissions (tCO₂e) per brand and how they’ve changed from 2015 to 2024</p>
+            <div class="chart-grid-co2">
+                <div class="chart-card chart-card--co2">
+                    <h3 class="chart-card-title">Carbon Emissions by Brand</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="co2BarChart"></canvas>
+                    </div>
+                    <p class="chart-note">Data derived from multi-market production records across Indonesia, Bangladesh, Vietnam, India, China, USA, UK, Germany, Brazil, and Turkey.</p>
+                </div>
+                <div class="chart-card chart-card--trend">
+                    <h3 class="chart-card-title">Emissions Over Time</h3>
+                    <div class="chart-wrapper chart-wrapper--tall">
+                        <canvas id="co2LineChart"></canvas>
+                    </div>
+                    <div class="chart-legend-custom" id="lineLegend"></div>
+                    <p class="chart-note">Each data point represents the average emissions across all countries where that brand operated in that year.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chart 3: Water vs Waste Scatter -->
+    <section class="content-section viz-section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: var(--spacing-xs);">Water Usage vs. Textile Waste</h2>
+            <p class="section-subtitle">Comparing each brand's average water consumption against landfill waste generated</p>
+            <div class="chart-card chart-card--water-waste">
+                <div class="chart-grid-two">
+                    <div class="chart-wrapper">
+                        <canvas id="waterChart"></canvas>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="wasteChart"></canvas>
+                    </div>
+                </div>
+                <p class="chart-note">Water usage in million litres; landfill waste in tonnes. Averages computed across all production years and countries.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Per-Garment Impact -->
     <section class="content-section">
         <div class="container">
@@ -104,49 +156,50 @@
                     <tbody>
                         <tr>
                             <td><strong>Cotton T-Shirt</strong></td>
-                            <td>_ kg CO₂</td>
-                            <td>_ liters</td>
-                            <td>_ years (pure cotton)</td>
+                            <td><span class="impact-badge impact-medium">2.1 kg CO₂</span></td>
+                            <td><span class="impact-badge impact-high">2,700 litres</span></td>
+                            <td>1–5 years (pure cotton)</td>
                         </tr>
                         <tr>
                             <td><strong>Pair of Jeans</strong></td>
-                            <td>_ kg CO₂</td>
-                            <td>_ liters</td>
-                            <td>_ years</td>
+                            <td><span class="impact-badge impact-high">33.4 kg CO₂</span></td>
+                            <td><span class="impact-badge impact-critical">7,000–10,000 litres</span></td>
+                            <td>50 years</td>
                         </tr>
                         <tr>
                             <td><strong>Polyester Dress</strong></td>
-                            <td>_ kg CO₂</td>
-                            <td>_ liters</td>
-                            <td>_ years</td>
+                            <td><span class="impact-badge impact-medium">5.5 kg CO₂</span></td>
+                            <td><span class="impact-badge impact-low">71 litres</span></td>
+                            <td>200+ years</td>
                         </tr>
                         <tr>
                             <td><strong>Sneakers</strong></td>
-                            <td>_ kg CO₂</td>
-                            <td>_ liters</td>
-                            <td>_ years</td>
+                            <td><span class="impact-badge impact-high">13.6 kg CO₂</span></td>
+                            <td><span class="impact-badge impact-medium">500 litres</span></td>
+                            <td>30–40 years</td>
                         </tr>
                         <tr>
                             <td><strong>Wool Sweater</strong></td>
-                            <td>_ kg CO₂</td>
-                            <td>_ liters</td>
-                            <td>_ years</td>
+                            <td><span class="impact-badge impact-high">46.8 kg CO₂</span></td>
+                            <td><span class="impact-badge impact-high">3,000+ litres</span></td>
+                            <td>1–5 years (natural wool)</td>
                         </tr>
                         <tr>
                             <td><strong>Nylon Jacket</strong></td>
-                            <td>_ kg CO₂</td>
-                            <td>_ liters</td>
-                            <td>_ years</td>
+                            <td><span class="impact-badge impact-high">21.3 kg CO₂</span></td>
+                            <td><span class="impact-badge impact-medium">400 litres</span></td>
+                            <td>30–40 years</td>
                         </tr>
                         <tr>
                             <td><strong>Leather Bag</strong></td>
-                            <td>_ kg CO₂</td>
-                            <td>_ liters</td>
-                            <td>_ years</td>
+                            <td><span class="impact-badge impact-critical">130+ kg CO₂</span></td>
+                            <td><span class="impact-badge impact-critical">17,000+ litres</span></td>
+                            <td>25–50 years (treated)</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+            <p class="chart-note" style="margin-top: 12px;">⚠️ Figures sourced from UNEP, Ellen MacArthur Foundation, and Water Footprint Network. Ranges vary by manufacturing method and country.</p>
         </div>
     </section>
 
@@ -383,6 +436,143 @@
     </footer>
 
     <style>
+        /* ===================== CHART STYLES (aligned with site design system) ===================== */
+        .viz-section {
+            padding-top: var(--spacing-xl);
+            padding-bottom: var(--spacing-xl);
+        }
+
+        .chart-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            margin-top: var(--spacing-md);
+            margin-left: auto;
+            margin-right: auto;
+            border-left: 4px solid var(--border-color);
+        }
+
+        .chart-card--co2 {
+            border-left-color: var(--accent-color);
+        }
+
+        .chart-card--trend {
+            border-left-color: var(--co2-color);
+        }
+
+        /* Side-by-side layout for CO2 bar + line charts */
+        .chart-grid-co2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-md);
+        }
+
+        .chart-card-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .chart-card--water-waste {
+            border-left-color: var(--water-color);
+        }
+
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            min-height: 320px;
+            max-height: 420px;
+            margin: 0 auto;
+        }
+
+        .chart-wrapper--tall {
+            min-height: 380px;
+            max-height: 480px;
+        }
+
+        .chart-grid-two {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        .chart-note {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: var(--spacing-md);
+            font-style: italic;
+        }
+
+        .chart-legend-custom {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .chart-legend-custom .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .chart-legend-custom .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: var(--radius-full);
+            flex-shrink: 0;
+        }
+
+        .viz-section .content-section h2,
+        .viz-section h2 {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .viz-section .section-subtitle {
+            color: var(--text-secondary);
+        }
+
+        /* Impact badges for the garment table */
+        .impact-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+        }
+
+        .impact-low {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .impact-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .impact-high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .impact-critical {
+            background: #1a0000;
+            color: #ff6b6b;
+        }
+
+        /* ===================== EXISTING STYLES ===================== */
         .garment-table {
             overflow-x: auto;
             background: white;
@@ -539,11 +729,317 @@
         
         @media (max-width: 992px) {
             .comparison-grid,
-            .material-cards {
+            .material-cards,
+            .chart-grid-two,
+            .chart-grid-co2 {
                 grid-template-columns: 1fr;
             }
         }
+
+        @media (max-width: 640px) {
+            .chart-wrapper {
+                max-height: 300px;
+            }
+        }
+
+        .chart-loading {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-sm);
+            color: var(--text-light);
+            pointer-events: none;
+        }
     </style>
+
+    <script>
+    // =====================================================================
+    // DATA → CHARTS (embedded only)
+    // Charts use data from data-embedded.js so they work everywhere (local,
+    // deployed, any host) with no extra network request or CSV file needed.
+    // To update data: edit the CSV, then regenerate data-embedded.js (see README).
+    // =====================================================================
+
+    function runCharts(rows) {
+        document.querySelectorAll('.chart-loading').forEach(el => el.remove());
+        if (!rows || !rows.length) return;
+        try {
+            buildCharts(rows);
+        } catch (err) {
+            console.error('Chart build error:', err);
+            document.querySelectorAll('.chart-wrapper').forEach(el => {
+                const msg = document.createElement('div');
+                msg.className = 'chart-loading';
+                msg.style.color = '#e63946';
+                msg.textContent = 'Chart failed to load. See console.';
+                el.appendChild(msg);
+            });
+        }
+    }
+
+    const BRANDS   = ['Shein', 'H&M', 'Zara', 'Forever 21', 'Uniqlo'];
+    // Site design system: accent (CO2), water, waste, pollution, primary
+    const COLORS   = ['#e63946', '#457b9d', '#2a9d8f', '#6a4c93', '#1a1a1a'];
+    const COLORS_A = ['rgba(230,57,70,0.12)', 'rgba(69,123,157,0.12)', 'rgba(42,157,143,0.12)', 'rgba(106,76,147,0.12)', 'rgba(26,26,26,0.12)'];
+
+    Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, sans-serif";
+    Chart.defaults.font.size = 12;
+    Chart.defaults.color = '#666666';
+
+    // ── HELPERS ──────────────────────────────────────────────────────────
+
+    // Average an array of numbers
+    function avg(arr) {
+        if (!arr.length) return 0;
+        return arr.reduce((a, b) => a + b, 0) / arr.length;
+    }
+
+    // Group rows: accumulator[key][subKey] = [values...]
+    function groupBy(rows, keyCol, subKeyCol, valueCol) {
+        const result = {};
+        for (const row of rows) {
+            const k  = row[keyCol];
+            const sk = row[subKeyCol];
+            const v  = parseFloat(row[valueCol]);
+            if (isNaN(v)) continue;
+            if (!result[k])      result[k]     = {};
+            if (!result[k][sk])  result[k][sk] = [];
+            result[k][sk].push(v);
+        }
+        return result;
+    }
+
+    // Show a friendly error inside each chart canvas
+    function showError(canvasId, msg) {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.font = '14px Inter, sans-serif';
+        ctx.fillStyle = '#e63946';
+        ctx.textAlign = 'center';
+        ctx.fillText(msg, canvas.width / 2, canvas.height / 2);
+    }
+
+    // ── LOADING STATE ─────────────────────────────────────────────────────
+    document.querySelectorAll('.chart-wrapper').forEach(el => {
+        el.insertAdjacentHTML('beforeend',
+            `<div class="chart-loading">Loading data…</div>`
+        );
+    });
+
+    // ── LOAD DATA from embedded script (no CSV file required) ──────────────
+    (function initCharts() {
+        if (typeof window.EMBEDDED_CSV !== 'string' || !window.EMBEDDED_CSV.trim()) {
+            document.querySelectorAll('.chart-loading').forEach(el => {
+                el.textContent = '⚠️ Data not loaded. Ensure data-embedded.js is in the same folder as this page.';
+                el.style.color = '#e63946';
+            });
+            return;
+        }
+        var parsed = Papa.parse(window.EMBEDDED_CSV, {
+            header: true,
+            dynamicTyping: false,
+            skipEmptyLines: true
+        });
+        var rows = (parsed && parsed.data) || [];
+        if (parsed.errors && parsed.errors.length) {
+            console.warn('Parse warnings:', parsed.errors);
+        }
+        runCharts(rows);
+    })();
+
+    // ── BUILD ALL CHARTS FROM PARSED ROWS ────────────────────────────────
+    function buildCharts(rows) {
+
+        // ── 1. AVG CO₂ BY BRAND (BAR) ────────────────────────────────────
+        const co2ByBrand = groupBy(rows, 'Brand', 'Brand', 'Carbon_Emissions_tCO2e');
+        const avgCO2 = BRANDS.map(b => {
+            const vals = Object.values(co2ByBrand[b] || {}).flat();
+            return Math.round(avg(vals));
+        });
+
+        const co2Min = Math.floor(Math.min(...avgCO2) * 0.97 / 100) * 100;
+
+        new Chart(document.getElementById('co2BarChart'), {
+            type: 'bar',
+            data: {
+                labels: BRANDS,
+                datasets: [{
+                    label: 'Avg CO₂ Emissions (tCO₂e)',
+                    data: avgCO2,
+                    backgroundColor: COLORS,
+                    borderWidth: 0,
+                    borderRadius: 6,
+                    borderSkipped: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(26,26,26,0.9)',
+                        callbacks: { label: ctx => ` ${ctx.parsed.y.toLocaleString()} tCO₂e` }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: co2Min,
+                        grid: { color: 'rgba(0,0,0,0.06)' },
+                        ticks: { callback: v => v.toLocaleString(), font: { size: 11 } },
+                        title: { display: true, text: 'tCO₂e per year', font: { size: 11 }, color: '#666' }
+                    },
+                    x: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#666' } }
+                }
+            }
+        });
+
+        // ── 2. CO₂ TREND BY YEAR (LINE) ──────────────────────────────────
+        const co2ByBrandYear = groupBy(rows, 'Brand', 'Year', 'Carbon_Emissions_tCO2e');
+        const allYears = [...new Set(rows.map(r => r.Year))].sort();
+
+        const lineDatasets = BRANDS.map((b, i) => ({
+            label: b,
+            data: allYears.map(y => {
+                const vals = (co2ByBrandYear[b] || {})[y] || [];
+                return vals.length ? Math.round(avg(vals)) : null;
+            }),
+            borderColor: COLORS[i],
+            backgroundColor: COLORS_A[i],
+            borderWidth: 2.5,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            pointBackgroundColor: COLORS[i],
+            tension: 0.35,
+            fill: false,
+            spanGaps: true, // connect across missing years
+        }));
+
+        const allCO2Vals = lineDatasets.flatMap(ds => ds.data.filter(Boolean));
+        const lineMin = Math.floor(Math.min(...allCO2Vals) * 0.97 / 100) * 100;
+
+        new Chart(document.getElementById('co2LineChart'), {
+            type: 'line',
+            data: { labels: allYears, datasets: lineDatasets },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                interaction: { mode: 'index', intersect: false },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(26,26,26,0.9)',
+                        callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()} tCO₂e` }
+                    }
+                },
+                scales: {
+                    y: {
+                        min: lineMin,
+                        grid: { color: 'rgba(0,0,0,0.06)' },
+                        ticks: { callback: v => v.toLocaleString(), font: { size: 11 }, color: '#666' },
+                        title: { display: true, text: 'Avg CO₂ (tCO₂e)', font: { size: 11 }, color: '#666' }
+                    },
+                    x: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#666' } }
+                }
+            }
+        });
+
+        // Build custom legend
+        const legendEl = document.getElementById('lineLegend');
+        BRANDS.forEach((b, i) => {
+            const item = document.createElement('div');
+            item.className = 'legend-item';
+            item.innerHTML = `<span class="legend-dot" style="background:${COLORS[i]}"></span><span>${b}</span>`;
+            legendEl.appendChild(item);
+        });
+
+        // ── 3a. WATER USAGE (BAR) ─────────────────────────────────────────
+        const waterByBrand = groupBy(rows, 'Brand', 'Brand', 'Water_Usage_Million_Litres');
+        const avgWater = BRANDS.map(b => +avg(Object.values(waterByBrand[b] || {}).flat()).toFixed(1));
+        const waterMin = Math.floor(Math.min(...avgWater) * 0.95);
+
+        new Chart(document.getElementById('waterChart'), {
+            type: 'bar',
+            data: {
+                labels: BRANDS,
+                datasets: [{
+                    label: 'Avg Water Usage (M litres)',
+                    data: avgWater,
+                    backgroundColor: COLORS,
+                    borderRadius: 6,
+                    borderSkipped: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Avg Water Usage per Brand (million litres)', font: { size: 12, weight: '600' }, padding: { bottom: 12 }, color: '#1a1a1a' },
+                    tooltip: {
+                        backgroundColor: 'rgba(26,26,26,0.9)',
+                        callbacks: { label: ctx => ` ${ctx.parsed.y.toFixed(1)}M litres` }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: waterMin,
+                        grid: { color: 'rgba(0,0,0,0.06)' },
+                        ticks: { callback: v => v + 'M', font: { size: 11 }, color: '#666' },
+                        title: { display: true, text: 'Million Litres', font: { size: 11 }, color: '#666' }
+                    },
+                    x: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#666' } }
+                }
+            }
+        });
+
+        // ── 3b. LANDFILL WASTE (BAR) ──────────────────────────────────────
+        const wasteByBrand = groupBy(rows, 'Brand', 'Brand', 'Landfill_Waste_Tonnes');
+        const avgWaste = BRANDS.map(b => Math.round(avg(Object.values(wasteByBrand[b] || {}).flat())));
+        const wasteMin = Math.floor(Math.min(...avgWaste) * 0.95 / 10) * 10;
+
+        new Chart(document.getElementById('wasteChart'), {
+            type: 'bar',
+            data: {
+                labels: BRANDS,
+                datasets: [{
+                    label: 'Avg Landfill Waste (tonnes)',
+                    data: avgWaste,
+                    backgroundColor: COLORS,
+                    borderRadius: 6,
+                    borderSkipped: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Avg Landfill Waste per Brand (tonnes)', font: { size: 12, weight: '600' }, padding: { bottom: 12 }, color: '#1a1a1a' },
+                    tooltip: {
+                        backgroundColor: 'rgba(26,26,26,0.9)',
+                        callbacks: { label: ctx => ` ${ctx.parsed.y.toLocaleString()} tonnes` }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: wasteMin,
+                        grid: { color: 'rgba(0,0,0,0.06)' },
+                        ticks: { callback: v => v + 't', font: { size: 11 }, color: '#666' },
+                        title: { display: true, text: 'Tonnes', font: { size: 11 }, color: '#666' }
+                    },
+                    x: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#666' } }
+                }
+            }
+        });
+    }
+    </script>
 
     <script src="script.js"></script>
 </body>
